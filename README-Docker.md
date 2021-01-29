@@ -1,8 +1,8 @@
 # pCloud console-client Docker Image
 
-**NOTE**: The docker image is done rather quick and is run as root user with `--privileged` argument, use at your own risk and backup data before getting started!
+**NOTE**: The docker image was done rather quick'n'dirty and is run as root user with `--privileged` argument, use at your own risk and backup data before getting started!
 
-If `pCloudDrive` fuse mount is not needed, the `--privileged` argument can be left out - but prepare to have the log spammed with errors about that.
+If `pCloudDrive` fuse mount is not needed, the `--privileged` argument can be left out - but prepare to have the logs spammed with errors about that.
 
 ## Build Docker Image
 
