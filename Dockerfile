@@ -19,5 +19,7 @@ RUN apt-get update && \
 	apt-get clean all
 COPY --from=builder /build/libpcloudcc_lib.so /build/libsqlite3.a /usr/lib/
 COPY --from=builder /build/pcloudcc /usr/bin/
+COPY syncfolder /usr/bin/
 ENV USERNAME=
+ENV DB=/root/.pcloud/data.db
 CMD pcloudcc -u $USERNAME -s

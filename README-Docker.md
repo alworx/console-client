@@ -8,6 +8,21 @@
 
   ```docker --privileged -e USERNAME=user@example.com pcloud```
 
+## syncfolder management
+```
+# print usage
+docker run pcloud syncfolder
+
+# list syncfolders
+docker run pcloud syncfolder list
+
+# add folder for two-way sync
+docker run pcloud syncfolder add PCLOUD_PATH LOCAL_PATH sync
+
+# remove syncfolder
+docker run pcloud syncfolder remove ID
+```
+
 ## Volumes:
 - Data directory `/root/.pcloud/`
 - Cache directory `/root/.pcloud/Cache`
