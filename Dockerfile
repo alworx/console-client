@@ -22,4 +22,4 @@ COPY --from=builder /build/pcloudcc /usr/bin/
 COPY syncfolder /usr/bin/
 ENV USERNAME=
 ENV DB=/root/.pcloud/data.db
-CMD pcloudcc -u $USERNAME -s
+CMD pcloudcc -u $USERNAME -s -m /mnt/pCloudDrive
