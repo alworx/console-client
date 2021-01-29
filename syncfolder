@@ -8,10 +8,12 @@ declare -A SYNCTYPEKEYS
 SYNCTYPEKEYS=( [1]="pull" [2]="push" [3]="sync" )
 
 function usage {
-    echo "Tool for managing syncfolders in pCloud console clients database."
-    echo "See https://github.com/pcloudcom/console-client"
+    echo "Unoffical Tool by https://github.com/alworx for managing syncfolders"
+    echo "in pCloud console clients database."
+    echo 
+    echo "Official pCloud console client: https://github.com/pcloudcom/console-client"
     echo
-    echo "syncfolder [list|add|remove] args"
+    echo "Usage: syncfolder [list|add|remove] args"
     echo 
     echo "syncfolder list"
     echo "Lists all syncfolders from the database."
@@ -20,9 +22,12 @@ function usage {
     echo "Add a new syncfolder to the database."
     echo
     echo "Arguments:"
-    echo "  PCLOUD_PATH      path to pcloud folder separated by /"
+    echo "  REMOTE_PATH      path to pcloud folder separated by /"
     echo "  LOCAL_PATH       path to local folder (must be empty)"
     echo "  push|pull|sync   optional sync type [default: sync]"
+    echo
+    echo "Example:"
+    echo "  syncfolder add My/Remote/Folder /My/Local/Folder sync"
     echo
     echo "syncfolder remove ID"
     echo "Removes a syncfolder from the database."
@@ -33,7 +38,7 @@ function usage {
     echo "Path to sqlite database can be overriden by setting an environment variable"
     echo "\"DB\" containing the path to the database file. Default: DB=\"data.db\"."
     echo 
-    echo "NOTE: make sure the console client is not running when messing with its database!"
+    echo "CAUTION: make sure the console client is not running when modifying the database!"
     echo
 }
 
@@ -124,7 +129,17 @@ function add_syncfolder {
 }
 
 function remove_syncfolder {
-    sqlite3 "$DB" "delete from syncfolder where id=$1;"
+    if ! [ "$1" -eq "$1" ]; then
+        exit 1
+    fi
+
+    id=$(sqlite3 "$DB" "select id from syncfolder where id=$1;")    
+    if [ "$id" -eq "$1" ]; then
+        sqlite3 "$DB" "delete from syncfolder where id=$1;"
+    else
+        echo "could not find synfolder with id=$1"
+        exit 1
+    fi
 }
 
 key="$1"
